@@ -10,7 +10,7 @@ services:
 
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.react-router.rule=Host(`app.vps.m89.pl`)"
+      - "traefik.http.routers.react-router.rule=Host(`app.vps.malejka.lowicz.pl`)"
       - "traefik.http.routers.react-router.entrypoints=websecure"
       - "traefik.http.routers.react-router.tls.certresolver=myresolver"
       - "traefik.http.services.react-service.loadbalancer.server.port=80"
