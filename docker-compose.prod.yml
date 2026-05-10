@@ -7,3 +7,16 @@ services:
     ports:
       - "8080:80"
     restart: unless-stopped
+    networks:
+      - proxy
+
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.react-router.rule=Host(`app.vps.m89.pl`)"
+      - "traefik.http.routers.react-router.entrypoints=websecure"
+      - "traefik.http.routers.react-router.tls.certresolver=myresolver"
+      - "traefik.http.services.react-service.loadbalancer.server.port=80"
+
+networks:
+  proxy:
+    external: true
