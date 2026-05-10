@@ -10,6 +10,7 @@ function App() {
   return (
     <>
       <section id="center">
+        <h1>Witaj w mojej aplikacji</h1>
         <p>Witaj na mojej zmienionej stronie internetowej</p>
       </section>
 
