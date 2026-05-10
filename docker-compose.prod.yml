@@ -1,0 +1,9 @@
+services:
+  frontend-prod:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: vite-react-prod
+    ports:
+      - "8080:80"
+    restart: unless-stopped
