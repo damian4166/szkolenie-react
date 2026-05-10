@@ -23,4 +23,4 @@ jobs:
           # Skrypt, który wykona się na serwerze:
           script: |
             cd /app/szkolenie-react
-            make setup
+            make setup env=prod
