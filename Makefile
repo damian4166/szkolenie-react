@@ -1,10 +1,11 @@
-env ?= prod
+env ?= dev
 
 # Logika wyboru pliku na podstawie zmiennej 'env'
 ifeq ($(env), dev)
 	ENV_FILE = docker-compose.yml
 	ENV_NAME = DEWELOPERSKIE
-else
+endif
+ifeq ($(env), prod)
 	ENV_FILE = docker-compose.prod.yml
 	ENV_NAME = PRODUKCYJNE
 endif
