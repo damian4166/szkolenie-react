@@ -1,30 +1,34 @@
-PROD= docker-compose.prod.yml
-DEV= docker-compose.yml
+PROD = docker-compose.prod.yml
+DEV = docker-compose.yml
 
-ENV=$(PROD)
+ENV = $(PROD)
 
 DC = docker compose -f $(ENV)
 
+.PHONY: setup
+setup: pull build restart
+	@echo "Projekt został pomyślnie zaktualizowany i uruchomiony"
+
 .PHONY: up
-up:
+up: $(DC) up -d
 	@echo "Uruchamianie środowiska Docker..."
-	$(DC) up -d
 
 .PHONY: down
-down:
+down: $(DC) down --remove-orphans
 	@echo "Zatrzymanie kontenerów..."
-	$(DC) down --remove-orphans
 
 .PHONY: build
-build:
-	$(DC) build		
+build: $(DC) build
+	@echo "Budowanie projektu"		
 
-.PHONY restart
+.PHONY: restart
 restart: down up
+	@echo "Restart projektu"
+	
 
 .PHONY: pull
-pull:
-	git pull
+pull: git pull
+	@echo "Pobieranie aktualizacji"
+	
 
-.PHONY setup
-setup: pull build restart
+
