@@ -1,34 +1,45 @@
-PROD = docker-compose.prod.yml
-DEV = docker-compose.yml
+env ?= prod
 
-ENV = $(PROD)
+# Logika wyboru pliku na podstawie zmiennej 'env'
+ifeq ($(env), dev)
+	ENV_FILE = docker-compose.yml
+	ENV_NAME = DEWELOPERSKIE
+else
+	ENV_FILE = docker-compose.prod.yml
+	ENV_NAME = PRODUKCYJNE
+endif
 
-DC = docker compose -f $(ENV)
+DC = docker compose -f $(ENV_FILE)
+
 
 .PHONY: setup
-setup: pull build restart
-	@echo "Projekt został pomyślnie zaktualizowany i uruchomiony"
+setup: pull build restart info
+	@echo "✅ Środowisko $(ENV_NAME) zostało pomyślnie zaktualizowane i uruchomione!"
 
 .PHONY: up
-up: $(DC) up -d
-	@echo "Uruchamianie środowiska Docker..."
+up:
+	@echo "🚀 Uruchamianie środowiska Docker..."
+	$(DC) up -d
 
 .PHONY: down
-down: $(DC) down --remove-orphans
-	@echo "Zatrzymanie kontenerów..."
+down:
+	@echo "🛑 Zatrzymywanie kontenerów..."
+	$(DC) down --remove-orphans
 
 .PHONY: build
-build: $(DC) build
-	@echo "Budowanie projektu"		
+build:
+	@echo "🔨 Budowanie projektu..."
+	$(DC) build 
 
 .PHONY: restart
 restart: down up
-	@echo "Restart projektu"
+	@echo "🔄 Restart kontenerów docker zakończony!"
 	
 
 .PHONY: pull
-pull: git pull
-	@echo "Pobieranie aktualizacji"
-	
+pull:
+	@echo "📥 Pobieranie aktualizacji..."
+	git pull
 
-
+info:
+	@echo "👉 Aktywne środowisko: $(ENV_NAME) ($(ENV_FILE))"
